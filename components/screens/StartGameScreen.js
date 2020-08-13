@@ -8,13 +8,37 @@ import Colors from '../../constans/colors';
 const StartGameScreen = props => {
 
     const [enteredValue, setEnteredValue] = useState('');
+    const [confirmed, setConfirmed] = useState(false);
+    const [selectedNumber, setSelectedNumber] = useState('');
 
     const onNumberChanged = inputValue => {
         setEnteredValue(inputValue.replace(/[^0-9]/g, ''));
     };
 
+    const onConfirmNumber = () => {
+        console.log('fired');
+        const chosenNumber = parseInt(enteredValue);
+        if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+            return;
+        }
+        setConfirmed(true);
+        setSelectedNumber(chosenNumber);
+        setEnteredValue('');
+        
+    }
+
+    const onResetNumber = () => {
+        setEnteredValue('');
+        setConfirmed(false);
+    }
+
+    let confirmedOutput;
+    if(confirmed){
+        confirmedOutput = <Text>Chosen number: {selectedNumber}</Text>
+    }
+
     return (
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screen}>
                 <Text style={styles.title}>Start a New Game!</Text>
                 <Card style={styles.inputContainer}>
@@ -29,13 +53,14 @@ const StartGameScreen = props => {
                         value={enteredValue} />
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <Button style={styles.button} title="Reset" OnPress={() => {}} color={Colors.accent} />
+                            <Button style={styles.button} title="Reset" onPress={onResetNumber} color={Colors.accent} />
                         </View>
                         <View style={styles.button}>
-                            <Button style={styles.button} title="Confirm" OnPress={() => {}} color={Colors.primary} />                        
+                            <Button style={styles.button} title="Confirm" onPress={onConfirmNumber} color={Colors.primary} />                        
                         </View>
                     </View>
                 </Card>
+                {confirmedOutput}
             </View>
         </TouchableWithoutFeedback>
     );
