@@ -9,6 +9,7 @@ const GameOverScreen = props => {
             <Text style={DefaultStyles.title}>The Game is over!</Text>
             <View style={styles.imageContainer}>
                 <Image source={require('../../assets/success.png')}
+                // dla obrazka z sieci source={{uri: 'https://uri-do-obrazka}} i koniecznie trzeba zdefiniować width i height (dla lokalnego nie trzeba)
                     style={styles.image}
                     resizeMode="cover"
                 />
