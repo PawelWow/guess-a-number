@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Ale
 
 import Card from '../Card';
 import Input from '../Input';
+import TitleText from '../TitleText';
+import BodyText from '../BodyText';
 import NumberContainer from '../NumberContainer';
 import Colors from '../../constans/colors';
 
@@ -50,9 +52,9 @@ const StartGameScreen = props => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screen}>
-                <Text style={styles.title}>Start a New Game!</Text>
+                <TitleText style={styles.title}>Start a New Game!</TitleText>
                 <Card style={styles.inputContainer}>
-                    <Text>Select a Number</Text>
+                    <BodyText>Select a Number</BodyText>
                     <Input style={styles.input} 
                         blurOnSubmit 
                         keyboardType="number-pad" 
