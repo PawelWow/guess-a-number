@@ -4,17 +4,19 @@ import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading } from 'expo';
 
-import Header from './components/Header';
-import StartGameScreen from './components/screens/StartGameScreen';
-import GameScreen from './components/screens/GameScreen';
-import GameOverScreen from './components/screens/GameOverScreen';
-
 const fetchFonts = () => {
   Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
   });
 };
+
+
+import Header from './components/Header';
+import StartGameScreen from './components/screens/StartGameScreen';
+import GameScreen from './components/screens/GameScreen';
+import GameOverScreen from './components/screens/GameOverScreen';
+
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
