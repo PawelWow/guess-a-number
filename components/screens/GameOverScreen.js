@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Image } from 'react-native';
 
-import DefaultStyles from '../../constans/default-styles';
+import Colors from '../../constans/colors';
+
+import BodyText from '../BodyText';
+import TitleText from '../TitleText';
 
 const GameOverScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text style={DefaultStyles.title}>The Game is over!</Text>
+            <TitleText>The Game is over!</TitleText>
             <View style={styles.imageContainer}>
                 <Image source={require('../../assets/success.png')}
                 // dla obrazka z sieci source={{uri: 'https://uri-do-obrazka}} i koniecznie trzeba zdefiniować width i height (dla lokalnego nie trzeba)
@@ -14,8 +17,15 @@ const GameOverScreen = props => {
                     resizeMode="cover"
                 />
             </View>
-            <Text style={DefaultStyles.bodyText}>Number of rounds: {props.roundsNumber}</Text>
-            <Text style={DefaultStyles.bodyText}>The number was: {props.userNumber}</Text>
+            <View style={styles.resultContainer}>
+                <BodyText style={styles.resultText}>
+                    Your phone needed{' '}
+                    <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to 
+                    guess the number{' '}
+                    <Text style={styles.highlight}>{props.userNumber}</Text>.
+                </BodyText>
+            </View>
+            
             <Button title="NEW GAME" onPress={props.onRestart} />
         </View>
     );
@@ -41,6 +51,18 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%'
+    },
+    resultContainer: {
+        marginHorizontal: 50,
+        marginVertical: 15
+    },
+    resultText: {
+        textAlign: 'center',
+        fontSize: 20
+    },
+    highlight: {
+        color: Colors.primary,
+        fontFamily: 'open-sans-bold'
     }
 });
 

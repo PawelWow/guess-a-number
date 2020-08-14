@@ -8,6 +8,8 @@ import BodyText from '../BodyText';
 import NumberContainer from '../NumberContainer';
 import Colors from '../../constans/colors';
 
+import DefaultStyles from '../../constans/default-styles';
+
 const StartGameScreen = props => {
 
     const [enteredValue, setEnteredValue] = useState('');
@@ -54,7 +56,7 @@ const StartGameScreen = props => {
             <View style={styles.screen}>
                 <TitleText style={styles.title}>Start a New Game!</TitleText>
                 <Card style={styles.inputContainer}>
-                    <BodyText>Select a Number</BodyText>
+                    <Text /* drugie podejście - style zamiast komponentu BodyText */ style={DefaultStyles.bodyText}>Select a Number</Text>
                     <Input style={styles.input} 
                         blurOnSubmit 
                         keyboardType="number-pad" 
