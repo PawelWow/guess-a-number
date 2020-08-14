@@ -20,6 +20,8 @@ const GameOverScreen = props => {
     );
 };
 
+// aby mieć idealne koło na andoridzie, imageContainer musi być kwadratem, a borderRadius musi mieć połowę wartości width i height
+
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
