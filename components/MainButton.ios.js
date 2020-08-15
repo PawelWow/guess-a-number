@@ -1,5 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    TouchableOpacity } from 'react-native';
 
 import Colors from '../constans/colors';
 
@@ -27,4 +31,3 @@ const styles = StyleSheet.create({
 });
 
 export default MainButton;
-
