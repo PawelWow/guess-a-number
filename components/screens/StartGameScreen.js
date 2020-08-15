@@ -1,5 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    Button, 
+    TouchableWithoutFeedback, 
+    Keyboard, 
+    Alert, 
+    Dimensions, 
+    ScrollView, 
+    KeyboardAvoidingView
+} from 'react-native';
 
 import Card from '../Card';
 import Input from '../Input';
@@ -16,6 +27,7 @@ const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
     const [confirmed, setConfirmed] = useState(false);
     const [selectedNumber, setSelectedNumber] = useState('');
+    const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4);
 
     const onNumberChanged = inputValue => {
         setEnteredValue(inputValue.replace(/[^0-9]/g, ''));
@@ -40,6 +52,17 @@ const StartGameScreen = props => {
         setConfirmed(false);
     }
 
+    useEffect(() => {
+        const updateLayout = () => {
+            setButtonWidth(Dimensions.get('window').width / 4);
+        };
+
+        Dimensions.addEventListener('change', updateLayout);
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        };
+    });
+
     let confirmedOutput;
     if(confirmed){
         confirmedOutput = (
@@ -53,31 +76,35 @@ const StartGameScreen = props => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.screen}>
-                <TitleText style={styles.title}>Start a New Game!</TitleText>
-                <Card style={styles.inputContainer}>
-                    <Text /* drugie podejście - style zamiast komponentu BodyText */ style={DefaultStyles.bodyText}>Select a Number</Text>
-                    <Input style={styles.input} 
-                        blurOnSubmit 
-                        keyboardType="number-pad" 
-                        autoCorrect={false} 
-                        AutoCapitalize='none' 
-                        maxLength={2}
-                        onChangeText={onNumberChanged} 
-                        value={enteredValue} />
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
-                            <Button style={styles.button} title="Reset" onPress={onResetNumber} color={Colors.accent} />
-                        </View>
-                        <View style={styles.button}>
-                            <Button style={styles.button} title="Confirm" onPress={onConfirmNumber} color={Colors.primary} />                        
-                        </View>
+        <ScrollView>
+            <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
+                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                    <View style={styles.screen}>
+                        <TitleText style={styles.title}>Start a New Game!</TitleText>
+                        <Card style={styles.inputContainer}>
+                            <Text /* drugie podejście - style zamiast komponentu BodyText */ style={DefaultStyles.bodyText}>Select a Number</Text>
+                            <Input style={styles.input} 
+                                blurOnSubmit 
+                                keyboardType="number-pad" 
+                                autoCorrect={false} 
+                                AutoCapitalize='none' 
+                                maxLength={2}
+                                onChangeText={onNumberChanged} 
+                                value={enteredValue} />
+                            <View style={styles.buttonContainer}>
+                                <View style={{width: buttonWidth}}>
+                                    <Button title="Reset" onPress={onResetNumber} color={Colors.accent} />
+                                </View>
+                                <View style={{width: buttonWidth}}>
+                                    <Button title="Confirm" onPress={onConfirmNumber} color={Colors.primary} />                        
+                                </View>
+                            </View>
+                        </Card>
+                        {confirmedOutput}
                     </View>
-                </Card>
-                {confirmedOutput}
-            </View>
-        </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 };
 
@@ -91,10 +118,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         marginVertical: 10,
+        fontFamily: 'open-sans-bold'
     },
     inputContainer: {
-        width: 300,
-        maxWidth: '80%',
+        width: '80%',
+        maxWidth: '95%',
+        minWidth: 300,
         alignItems: 'center',
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2},
@@ -111,9 +140,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 15
     },
-    button: {
-        width: 100,
-    },
+    // button: {
+    //     //width: 100,
+    //     width: Dimensions.get('window').width  / 4
+    // },
     summaryContainer: {
         marginTop: 20,
         alignItems: 'center'
